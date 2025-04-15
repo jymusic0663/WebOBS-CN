@@ -1,33 +1,33 @@
-[Original Repository](https://github.com/t-mullen/Web-Broadcasting-Software)
+[原始仓库](https://github.com/t-mullen/Web-Broadcasting-Software)
 
+# 网页直播软件 (WBS)
 
-# Web Broadcasting Software (WBS)
+[![JavaScript 代码规范](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+<img width="1278" alt="截图" src="https://user-images.githubusercontent.com/14932492/61163247-02022980-a4db-11e9-8bc2-d8e74578aa2f.png">
 
-<img width="1278" alt="screenshot" src="https://user-images.githubusercontent.com/14932492/61163247-02022980-a4db-11e9-8bc2-d8e74578aa2f.png">
+[在线演示](https://t-mullen.github.io/Web-Broadcasting-Software/)
 
-[Try the Live Demo](https://t-mullen.github.io/Web-Broadcasting-Software/) 
+基于浏览器的实时直播与录制软件，灵感来源于[OBS](https://obsproject.com/)。WBS允许主播录制音视频、创建画面合成、应用视听效果，并最终输出到广播传输系统（本项目不包含传输功能实现）。
 
-Live broadcasting and recording software for the web, inspired by [OBS](https://obsproject.com/). WBS allows broadcasters to record video and audio, create video composites, apply audiovisual effects and eventually output to a broadcast transport (which is not within the scope of this project)... all within the browser.
+软件界面和功能模拟了开源直播软件(OBS)，但可以很容易修改以适应非技术用户。
 
-The UI and functionality of WBS is modeled around Open Broadcasting Software (OBS), but can be easily modified to suit less technical users.
+新手使用指南：
 
-If you've never used similar software:
-  1. Click "+" on scenes.
-  2. Click "+" on sources. 
-  3. Select a media device. 
-  4. You can then drag and resize that video, or add more videos to make a composite.
-  5. Switch between scenes and active videos by click on them.
-  6. "Start Streaming" emits an output MediaStream that can be used in other modules.
+1. 在场景(scenes)中点击"+" 
+2. 在来源(sources)中点击"+"
+3. 选择媒体设备
+4. 可拖拽调整视频位置大小，或添加多个视频进行画面合成
+5. 点击切换不同场景和活动视频源
+6. "开始直播"会生成可用于其他模块的媒体流输出
 
-## install
+## 安装
 
 ```html
 <script src="wbs.js"></script>
 ```
 
-## usage
+## 使用
 
 ```html
 <div></div>
@@ -35,11 +35,11 @@ If you've never used similar software:
   var wbs = new WBS('div') // Element or selector to place the UI
   
   wbs.on('stream', function (stream) {
-    // fired when user presses "Start Streaming"
-    // stream is the MediaStream output
+    // 当用户点击“开始直播”时触发
+    // stream 是输出的媒体流
   })
   wbs.on('stopstream', function () {
-    // fired when the user presses "Stop Streaming"
+    // 当用户点击“停止直播”时触发
   })
 </script>
 ```
@@ -48,27 +48,27 @@ If you've never used similar software:
 
 ### `var wbs = new WBS(element, [opts])`
 
-`element` is a HTMLElement or CSS selector string. The display will attempt to fit inside this element.
+`element` 是一个 `HTMLElement` 或 CSS 选择器字符串。显示区域会尝试适配到该元素内部。
 
-This constructor must be wrapped in a user gesture like a "click" event listener.
+此构造函数必须包裹在用户手势（如 “click” 事件监听器）内。
 
-Optional `opts` is a configuration object that will override the following defaults:
+可选的 `opts` 是一个配置对象，用于覆盖以下默认值：
 
 ```
 {
   output: {
-    width: 1200,  // resolution of the output stream
+    width: 1200,  // 分辨率
     height: 900,
-    fps: 40       // frames per second of the output stream
+    fps: 40       // 每秒帧数
   },
-  injectStyles: true, // whether to inject the WBS css
+  injectStyles: true, // 是否注入 WBS 的 CSS 样式
   inputs: [array of input devices - see below]
 }
 ```
 
-### adding input devices
+### 添加输入设备
 
-WBS automatically detects AV devices on the system. However, any method to get a MediaStream can be used as an input. To add your own, put an object inside the `opts.inputs` array that has the following format:
+WBS 会自动检测系统上的音视频设备。不过，任何获取 MediaStream 的方法都可作为输入源。若要添加自定义输入源，请在 `opts.inputs` 数组中放入一个具有以下格式的对象：
 
 ```
 {
@@ -84,23 +84,25 @@ WBS automatically detects AV devices on the system. However, any method to get a
 }
 ```
 
-Here is an example device:
+示例:
 
+```
 ```javascript
 {
-  name: 'Video Camera (Video Input)',
+  name: '摄像头 (视频输入)',
   hasVideo: true, // false for
   getStream: function (callback) {
     getusermedia({audio:false, video:true}, function (err, stream) {
-      callback(err, 'Video Camera', true, stream)
+      callback(err, '摄像头', true, stream)
     })
   }
 }
 ```
 
-## notes
-`wbs` does not **broadcast** your video, it simply gives you an output MediaStream to do with as you wish.
+## 注意事项
 
-You could send it over a WebRTC connection, record it as a file, send to to a proxy RTMP server, pipe it through FFMPEG... anything.
+`wbs` 并不会直接**直播**你的视频，它只是为你提供一个输出的 `MediaStream`，你可以根据自己的需求来使用它。
 
-For an example P2P transport using [Dat](https://datproject.org/) and [BeakerBrowser](https://beakerbrowser.com/), see [wbs-plus-hypercast](https://github.com/t-mullen/wbs-plus-hypercast). (Only works with Beaker Browser.)
+你可以通过`WebRTC`连接发送它，将其录制为文件，发送到代理`RTMP`服务器，通过`ffmpeg`进行处理……任何操作都可以。
+
+若要查看使用 [Dat](https://datproject.org/) 和 [Beaker 浏览器](https://beakerbrowser.com/) 实现的点对点传输示例，请参阅 [wbs-plus-hypercast](https://github.com/t-mullen/wbs-plus-hypercast)。（仅适用于 Beaker 浏览器。）

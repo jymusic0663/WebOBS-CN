@@ -4,7 +4,7 @@ function Transitions () {
   var self = this
 
   self.element = h('div.transitions',
-                  h('label', 'Scene Transitions'))
+                  h('label', '转场动画'))
 }
 
 Transitions.prototype.method = function () {

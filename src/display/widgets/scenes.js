@@ -19,7 +19,7 @@ function Scenes (output) {
   self.list.on('change', self._changeScene.bind(self))
   
   self.element = h('div.scenes',
-                  h('label', 'Scenes'),
+                  h('label', '场景'),
                   self.list.element)
   
   self.counter = 0
@@ -55,7 +55,7 @@ Scenes.prototype._createScene = function () {
   })
   
   self.counter++
-  self.list.addOption('Scene '+self.counter, newScene)
+  self.list.addOption('场景_'+self.counter, newScene)
 }
 
 Scenes.prototype._destroyScene = function (scene) {

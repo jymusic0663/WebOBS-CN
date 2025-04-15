@@ -11,7 +11,7 @@ function Source (stream, name, hasVideo) {
 
   self.stream = stream || null
   self.id = stream.id || cuid()
-  self.name = name || 'Source'
+  self.name = name || '来源'
   self.hasVideo = hasVideo
   self.mover = null
 }

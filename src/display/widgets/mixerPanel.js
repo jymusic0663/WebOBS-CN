@@ -8,7 +8,7 @@ function MixerPanel () {
   var listEl = h('div')
   
   self.element = h('div.mixer',
-                  h('label', 'Mixer'),
+                  h('label', '混音器'),
                   listEl)
   
   mixer.on('sourceAdd', function (source) {

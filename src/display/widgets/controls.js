@@ -8,7 +8,7 @@ function Controls () {
   var self = this
 
   self._startedStream = false
-  self._startButton = h('button.stopped', {onclick: self.clickStream.bind(self)}, 'Start Streaming')
+  self._startButton = h('button.stopped', {onclick: self.clickStream.bind(self)}, '开始直播')
   self._startButton.style.marginTop = '10px'
   
   var label = h('label')
@@ -26,11 +26,11 @@ Controls.prototype.clickStream = function () {
   var self = this
   
   if (self._startedStream) {
-    self._startButton.innerHTML = 'Start Streaming'
+    self._startButton.innerHTML = '开始直播'
     self._startButton.className = 'stopped'
     self.emit('stopstream')
   } else {
-    self._startButton.innerHTML = 'Stop Streaming'
+    self._startButton.innerHTML = '停止直播'
     self._startButton.className = 'started'
     self.emit('stream')
   }

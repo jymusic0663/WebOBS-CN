@@ -20,9 +20,9 @@ function WBS (element, opts) {
 
   mixer.setAudioContext(audioContext)
   opts.output = opts.output || {
-    width: 400 * 3,
-    height: 300 * 3,
-    fps: 40,
+    width: 640 * 3,
+    height: 360 * 3,
+    fps: 30,
     audioContext: audioContext
   }
   opts.inputs = opts.inputs || []

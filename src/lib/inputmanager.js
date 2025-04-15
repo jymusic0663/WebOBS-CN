@@ -16,7 +16,7 @@ function getMediaPermissions (cb) {
 
 function getReadableName (device, counter) {
   if (device.label) {
-    return device.label + ' ('+formatKind(device.kind)+')'
+    return '['+formatKind(device.kind)+'] ' + device.label
   } else {
     return formatKind(device.kind)+ ' ' + counter
   }
@@ -25,16 +25,16 @@ function getReadableName (device, counter) {
 function formatKind (kind) {
   switch (kind) {
     case 'audioinput':
-      return 'Audio Input'
+      return '音频输入'
       break
     case 'videoinput':
-      return 'Video Input'
+      return '视频输入'
       break
     case 'audiooutput':
-      return 'Audio Output'
+      return '音频输出'
       break
     case 'videooutput':
-      return 'Video Output'
+      return '视频输出'
       break
   }
 }
@@ -60,14 +60,14 @@ function InputManager (opts) {
 
     self.inputs.push({
       id: ++counter,
-      name: 'Image Asset',
+      name: '图像资源',
       getStream: function (cb) {
         self.getFile(file => {
           const imageElement = document.createElement('img')
           const reader = new FileReader()
           console.log(file)
           reader.onload = function(event) {
-            console.log('loaded')
+            console.log('图像已加载')
             imageElement.src = event.target.result
             cb(null, file.name, true, imageElement)
           }
@@ -79,10 +79,10 @@ function InputManager (opts) {
     if (navigator.mediaDevices.getDisplayMedia) {
       self.inputs.push({
         id: ++counter,
-        name: 'Screen Capture',
+        name: '窗口获取',
         getStream: function (cb) {
           navigator.mediaDevices.getDisplayMedia({ audio: false, video: true }).then(stream => {
-            cb(null, 'Screen Capture', true, stream)
+            cb(null, '窗口获取', true, stream)
           })
         }
       })
@@ -113,7 +113,7 @@ InputManager.prototype.getFile = function (cb) {
   var self = this
   
   vex.dialog.open({
-    message: 'Select a file',
+    message: '选择文件',
     input: [
         '<style>',
             '.vex-custom-field-wrapper {',
@@ -140,7 +140,7 @@ InputManager.prototype.chooseDevice = function (cb) {
   var self = this
   
   vex.dialog.open({
-    message: 'Select a media source',
+    message: '选择窗口源',
     input: [
         '<style>',
             '.vex-custom-field-wrapper {',

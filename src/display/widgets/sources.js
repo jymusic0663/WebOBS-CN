@@ -23,7 +23,7 @@ function Sources (opts) {
   self._ready = false
   
   self.element = h('div.sources',
-                  h('label', 'Sources'),
+                  h('label', '来源'),
                   self.list.element)
   
   self.list.on('remove', function (source) {
@@ -55,7 +55,7 @@ Sources.prototype._getSource = function () {
   self.inputManager.chooseDevice(function (err, name, hasVideo, stream) {
     if (err) throw err
     
-    var newSource = new Source(stream, name || 'Source', hasVideo)
+    var newSource = new Source(stream, name || '源', hasVideo)
     
     self.scene.addSource(newSource)
     self.list.addOption(newSource.name, newSource)
