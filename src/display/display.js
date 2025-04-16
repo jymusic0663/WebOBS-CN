@@ -61,7 +61,12 @@ function Display (element, opts) {
   self.controls.on('stopstream', function () {
     self.emit('stopstream')
   })
-
+  self.controls.on('saveSettings', (newSettings) => {
+    self.emit('saveSettings', newSettings)
+  })
+  self.controls.on('clearSettings', () => {
+    self.emit('clearSettings')
+  })
 }
 
 Display.prototype._changeScene = function (scene) {

@@ -1,5 +1,5 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.WBS = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-var css = "@keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n@-webkit-keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n@-moz-keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n@-ms-keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n@-o-keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n.vex.vex-theme-plain {\n  padding-top: 160px;\n  padding-bottom: 160px;\n}\n.vex.vex-theme-plain .vex-content {\n  font-family: \"Helvetica Neue\", sans-serif;\n  background: #fff;\n  color: #444;\n  padding: 1em;\n  position: relative;\n  margin: 0 auto;\n  max-width: 100%;\n  width: 450px;\n  font-size: 1.1em;\n  line-height: 1.5em;\n}\n.vex.vex-theme-plain .vex-content h1,\n.vex.vex-theme-plain .vex-content h2,\n.vex.vex-theme-plain .vex-content h3,\n.vex.vex-theme-plain .vex-content h4,\n.vex.vex-theme-plain .vex-content h5,\n.vex.vex-theme-plain .vex-content h6,\n.vex.vex-theme-plain .vex-content p,\n.vex.vex-theme-plain .vex-content ul,\n.vex.vex-theme-plain .vex-content li {\n  color: inherit;\n}\n.vex.vex-theme-plain .vex-close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  cursor: pointer;\n}\n.vex.vex-theme-plain .vex-close:before {\n  position: absolute;\n  content: \"\\00D7\";\n  font-size: 26px;\n  font-weight: normal;\n  line-height: 31px;\n  height: 30px;\n  width: 30px;\n  text-align: center;\n  top: 3px;\n  right: 3px;\n  color: #bbb;\n  background: transparent;\n}\n.vex.vex-theme-plain .vex-close:hover:before,\n.vex.vex-theme-plain .vex-close:active:before {\n  color: #777;\n  background: #e0e0e0;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-message {\n  margin-bottom: .5em;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input {\n  margin-bottom: 1em;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"date\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"datetime\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"datetime-local\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"email\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"month\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"number\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"password\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"search\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"tel\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"text\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"time\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"url\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"week\"] {\n  background: #f0f0f0;\n  width: 100%;\n  padding: .25em .67em;\n  border: 0;\n  font-family: inherit;\n  font-weight: inherit;\n  font-size: inherit;\n  min-height: 2.5em;\n  margin: 0 0 .25em;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"date\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"datetime\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"datetime-local\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"email\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"month\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"number\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"password\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"search\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"tel\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"text\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"time\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"url\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"week\"]:focus {\n  -moz-box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);\n  -webkit-box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);\n  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);\n  outline: none;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons {\n  *zoom: 1;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons:after {\n  content: \"\";\n  display: table;\n  clear: both;\n}\n.vex.vex-theme-plain .vex-dialog-button {\n  -moz-border-radius: 0;\n  -webkit-border-radius: 0;\n  border-radius: 0;\n  border: 0;\n  float: right;\n  margin: 0 0 0 .5em;\n  font-family: inherit;\n  text-transform: uppercase;\n  letter-spacing: .1em;\n  font-size: .8em;\n  line-height: 1em;\n  padding: .75em 2em;\n}\n.vex.vex-theme-plain .vex-dialog-button.vex-last {\n  margin-left: 0;\n}\n.vex.vex-theme-plain .vex-dialog-button:focus {\n  animation: vex-pulse 1.1s infinite;\n  -webkit-animation: vex-pulse 1.1s infinite;\n  -moz-animation: vex-pulse 1.1s infinite;\n  -ms-animation: vex-pulse 1.1s infinite;\n  -o-animation: vex-pulse 1.1s infinite;\n  -webkit-backface-visibility: hidden;\n  outline: none;\n}\n@media (max-width: 568px) {\n  .vex.vex-theme-plain .vex-dialog-button:focus {\n    animation: none;\n    -webkit-animation: none;\n    -moz-animation: none;\n    -ms-animation: none;\n    -o-animation: none;\n    -webkit-backface-visibility: hidden;\n  }\n}\n.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {\n  background: #3288e6;\n  color: #fff;\n}\n.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary {\n  background: #e0e0e0;\n  color: #777;\n}\n.vex-loading-spinner.vex-theme-plain {\n  height: 2.5em;\n  width: 2.5em;\n}\n"; (require("browserify-css").createStyle(css, { "href": "less/vex-theme-plain.css" }, { "insertAt": "bottom" })); module.exports = css;
+var css = "@keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n@-webkit-keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n@-moz-keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n@-ms-keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n@-o-keyframes vex-pulse {\n  0% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n\n  70% {\n    -moz-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    -webkit-box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n    box-shadow: inset 0 0 0 300px rgba(255, 255, 255, 0.25);\n  }\n\n  100% {\n    -moz-box-shadow: inset 0 0 0 300px transparent;\n    -webkit-box-shadow: inset 0 0 0 300px transparent;\n    box-shadow: inset 0 0 0 300px transparent;\n  }\n}\n.vex.vex-theme-plain {\n  padding-top: 160px;\n  padding-bottom: 160px;\n}\n.vex.vex-theme-plain .vex-content {\n  font-family: \"Helvetica Neue\", sans-serif;\n  background: #fff;\n  color: #444;\n  padding: 1em;\n  position: relative;\n  margin: 0 auto;\n  max-width: 100%;\n  width: 450px;\n  font-size: 1.1em;\n  line-height: 1.5em;\n}\n.vex.vex-theme-plain .vex-content h1,\n.vex.vex-theme-plain .vex-content h2,\n.vex.vex-theme-plain .vex-content h3,\n.vex.vex-theme-plain .vex-content h4,\n.vex.vex-theme-plain .vex-content h5,\n.vex.vex-theme-plain .vex-content h6,\n.vex.vex-theme-plain .vex-content p,\n.vex.vex-theme-plain .vex-content ul,\n.vex.vex-theme-plain .vex-content li {\n  color: inherit;\n}\n.vex.vex-theme-plain .vex-close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  cursor: pointer;\n}\n.vex.vex-theme-plain .vex-close:before {\n  position: absolute;\n  content: \"\\00D7\";\n  font-size: 26px;\n  font-weight: normal;\n  line-height: 31px;\n  height: 30px;\n  width: 30px;\n  text-align: center;\n  top: 3px;\n  right: 3px;\n  color: #bbb;\n  background: transparent;\n}\n.vex.vex-theme-plain .vex-close:hover:before,\n.vex.vex-theme-plain .vex-close:active:before {\n  color: #777;\n  background: #e0e0e0;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-message {\n  margin-bottom: .5em;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input {\n  margin-bottom: 1em;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"date\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"datetime\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"datetime-local\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"email\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"month\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"number\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"password\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"search\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"tel\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"text\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"time\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"url\"],\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"week\"] {\n  background: #f0f0f0;\n  width: 100%;\n  padding: .25em .67em;\n  border: 0;\n  font-family: inherit;\n  font-weight: inherit;\n  font-size: inherit;\n  min-height: 2.5em;\n  margin: 0 0 .25em;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"date\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"datetime\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"datetime-local\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"email\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"month\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"number\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"password\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"search\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"tel\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"text\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"time\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"url\"]:focus,\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type=\"week\"]:focus {\n  -moz-box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);\n  -webkit-box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);\n  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);\n  outline: none;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons {\n  *zoom: 1;\n}\n.vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons:after {\n  content: \"\";\n  display: table;\n  clear: both;\n}\n.vex.vex-theme-plain .vex-dialog-button {\n  -moz-border-radius: 0;\n  -webkit-border-radius: 0;\n  border-radius: 0;\n  border: 0;\n  float: right;\n  margin: 0 0 0 .5em;\n  font-family: inherit;\n  text-transform: uppercase;\n  letter-spacing: .1em;\n  font-size: .8em;\n  line-height: 1em;\n  padding: .75em 2em;\n}\n.vex.vex-theme-plain .vex-dialog-button.vex-last {\n  margin-left: 0;\n}\n.vex.vex-theme-plain .vex-dialog-button:focus {\n  animation: vex-pulse 1.1s infinite;\n  -webkit-animation: vex-pulse 1.1s infinite;\n  -moz-animation: vex-pulse 1.1s infinite;\n  -ms-animation: vex-pulse 1.1s infinite;\n  -o-animation: vex-pulse 1.1s infinite;\n  -webkit-backface-visibility: hidden;\n  outline: none;\n}\n@media (max-width: 568px) {\n  .vex.vex-theme-plain .vex-dialog-button:focus {\n    animation: none;\n    -webkit-animation: none;\n    -moz-animation: none;\n    -ms-animation: none;\n    -o-animation: none;\n    -webkit-backface-visibility: hidden;\n  }\n}\n.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {\n  background: #3288e6;\n  color: #fff;\n}\n.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary {\n  background: #e0e0e0;\n  color: #777;\n}\n.vex-loading-spinner.vex-theme-plain {\n  height: 2.5em;\n  width: 2.5em;\n}\n.vex-dialog-button-danger {\n  background: #dc3545 !important;\n  color: white !important;\n  order: 1;\n  /* 左侧排列 */\n}\n.vex-dialog-button-primary {\n  order: 3;\n  /* 最右侧 */\n}\n.vex-dialog-button-secondary {\n  order: 2;\n  /* 中间 */\n}\n.vex-dialog-buttons {\n  display: flex;\n  justify-content: flex-end;\n  /* 整体右对齐 */\n  gap: 10px;\n}\n"; (require("browserify-css").createStyle(css, { "href": "less/vex-theme-plain.css" }, { "insertAt": "bottom" })); module.exports = css;
 },{"browserify-css":6}],2:[function(require,module,exports){
 var css = "@keyframes vex-fadein {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes vex-fadein {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n@-moz-keyframes vex-fadein {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n@-ms-keyframes vex-fadein {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n@-o-keyframes vex-fadein {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n@keyframes vex-fadeout {\n  0% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 0;\n  }\n}\n@-webkit-keyframes vex-fadeout {\n  0% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 0;\n  }\n}\n@-moz-keyframes vex-fadeout {\n  0% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 0;\n  }\n}\n@-ms-keyframes vex-fadeout {\n  0% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 0;\n  }\n}\n@-o-keyframes vex-fadeout {\n  0% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 0;\n  }\n}\n@keyframes vex-rotation {\n  0% {\n    transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n  }\n\n  100% {\n    transform: rotate(359deg);\n    -webkit-transform: rotate(359deg);\n    -moz-transform: rotate(359deg);\n    -ms-transform: rotate(359deg);\n    -o-transform: rotate(359deg);\n  }\n}\n@-webkit-keyframes vex-rotation {\n  0% {\n    transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n  }\n\n  100% {\n    transform: rotate(359deg);\n    -webkit-transform: rotate(359deg);\n    -moz-transform: rotate(359deg);\n    -ms-transform: rotate(359deg);\n    -o-transform: rotate(359deg);\n  }\n}\n@-moz-keyframes vex-rotation {\n  0% {\n    transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n  }\n\n  100% {\n    transform: rotate(359deg);\n    -webkit-transform: rotate(359deg);\n    -moz-transform: rotate(359deg);\n    -ms-transform: rotate(359deg);\n    -o-transform: rotate(359deg);\n  }\n}\n@-ms-keyframes vex-rotation {\n  0% {\n    transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n  }\n\n  100% {\n    transform: rotate(359deg);\n    -webkit-transform: rotate(359deg);\n    -moz-transform: rotate(359deg);\n    -ms-transform: rotate(359deg);\n    -o-transform: rotate(359deg);\n  }\n}\n@-o-keyframes vex-rotation {\n  0% {\n    transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n  }\n\n  100% {\n    transform: rotate(359deg);\n    -webkit-transform: rotate(359deg);\n    -moz-transform: rotate(359deg);\n    -ms-transform: rotate(359deg);\n    -o-transform: rotate(359deg);\n  }\n}\n.vex,\n.vex *,\n.vex *:before,\n.vex *:after {\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.vex {\n  position: fixed;\n  overflow: auto;\n  -webkit-overflow-scrolling: touch;\n  z-index: 1111;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n.vex-scrollbar-measure {\n  position: absolute;\n  top: -9999px;\n  width: 50px;\n  height: 50px;\n  overflow: scroll;\n}\n.vex-overlay {\n  background: #000;\n  filter: alpha(opacity=40);\n  -ms-filter: \"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)\";\n}\n.vex-overlay {\n  animation: vex-fadein 0.5s;\n  -webkit-animation: vex-fadein 0.5s;\n  -moz-animation: vex-fadein 0.5s;\n  -ms-animation: vex-fadein 0.5s;\n  -o-animation: vex-fadein 0.5s;\n  -webkit-backface-visibility: hidden;\n  position: fixed;\n  background: rgba(0, 0, 0, 0.4);\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n.vex.vex-closing .vex-overlay {\n  animation: vex-fadeout 0.5s;\n  -webkit-animation: vex-fadeout 0.5s;\n  -moz-animation: vex-fadeout 0.5s;\n  -ms-animation: vex-fadeout 0.5s;\n  -o-animation: vex-fadeout 0.5s;\n  -webkit-backface-visibility: hidden;\n}\n.vex-content {\n  animation: vex-fadein 0.5s;\n  -webkit-animation: vex-fadein 0.5s;\n  -moz-animation: vex-fadein 0.5s;\n  -ms-animation: vex-fadein 0.5s;\n  -o-animation: vex-fadein 0.5s;\n  -webkit-backface-visibility: hidden;\n  background: #fff;\n}\n.vex.vex-closing .vex-content {\n  animation: vex-fadeout 0.5s;\n  -webkit-animation: vex-fadeout 0.5s;\n  -moz-animation: vex-fadeout 0.5s;\n  -ms-animation: vex-fadeout 0.5s;\n  -o-animation: vex-fadeout 0.5s;\n  -webkit-backface-visibility: hidden;\n}\n.vex-close:before {\n  font-family: Arial, sans-serif;\n  content: \"\\00D7\";\n}\n.vex-dialog-form {\n  margin: 0;\n}\n.vex-dialog-button {\n  text-rendering: optimizeLegibility;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  cursor: pointer;\n  -webkit-tap-highlight-color: transparent;\n}\n.vex-loading-spinner {\n  animation: vex-rotation 0.7s linear infinite;\n  -webkit-animation: vex-rotation 0.7s linear infinite;\n  -moz-animation: vex-rotation 0.7s linear infinite;\n  -ms-animation: vex-rotation 0.7s linear infinite;\n  -o-animation: vex-rotation 0.7s linear infinite;\n  -webkit-backface-visibility: hidden;\n  -moz-box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);\n  -webkit-box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);\n  box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);\n  position: fixed;\n  z-index: 1112;\n  margin: auto;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  height: 2em;\n  width: 2em;\n  background: #fff;\n}\nbody.vex-open {\n  overflow: hidden;\n}\n"; (require("browserify-css").createStyle(css, { "href": "less/vex.css" }, { "insertAt": "bottom" })); module.exports = css;
 },{"browserify-css":6}],3:[function(require,module,exports){
@@ -6948,7 +6948,12 @@ function Display (element, opts) {
   self.controls.on('stopstream', function () {
     self.emit('stopstream')
   })
-
+  self.controls.on('saveSettings', (newSettings) => {
+    self.emit('saveSettings', newSettings)
+  })
+  self.controls.on('clearSettings', () => {
+    self.emit('clearSettings')
+  })
 }
 
 Display.prototype._changeScene = function (scene) {
@@ -6962,24 +6967,30 @@ module.exports = Display
 var h = require('hyperscript')
 var EventEmitter = require('events').EventEmitter
 var inherits = require('inherits')
+var vex = require('vex-js')
+require('./../../../less/vex.css')
+require('./../../../less/vex-theme-plain.css')
 
 inherits(Controls, EventEmitter)
 
-function Controls () {
+function Controls (opts) {
   var self = this
-
+  self.opts = opts
   self._startedStream = false
   self._startButton = h('button.stopped', {onclick: self.clickStream.bind(self)}, '开始直播')
   self._startButton.style.marginTop = '10px'
+  
+  // 添加设置按钮
+  self._settingsButton = h('button.settings-btn', {onclick: self.showSettings.bind(self)}, '设置')
+  self._settingsButton.style.marginTop = '5px'
   
   var label = h('label')
   label.innerHTML = '&nbsp;'
   
   self.element = h('div.controls',
                     label,
-                    self._startButton//,
-                    //h('button', {onclick: self.clickRecord}, 'Start Recording'),
-                    //h('button', {onclick: self.clickSettings}, 'Settings')
+                    self._startButton,
+                    self._settingsButton
                   )
 }
 
@@ -7004,13 +7015,46 @@ Controls.prototype.clickRecord = function () {
   // TODO
 }
 
-Controls.prototype.clickSettings = function () {
-  var self = this
-  // TODO
+// 添加设置弹窗方法
+Controls.prototype.showSettings = function() {
+  var self = this;
+  vex.dialog.open({
+    message: '直播设置',
+    input: [
+      '<label>SRS推流地址(rtc)</label>',
+      '<input type="text" name="url" value="' + self.opts.server.url + '">',
+      '<label>分辨率宽度</label>',
+      '<input type="number" name="width" value="' + self.opts.output.width + '">',
+      '<label>分辨率高度</label>',
+      '<input type="number" name="height" value="' + self.opts.output.height + '">',
+      '<label>帧率(FPS)</label>',
+      '<input type="number" name="fps" value="' + self.opts.output.fps + '">',
+      '<label>码率(Kbps)</label>',
+      '<input type="number" name="bitrate" value="' + (self.opts.output.bitrate/1000) + '">'
+    ].join(''),
+    buttons: [
+      {
+        text: '清除设置', 
+        type: 'button',
+        className: 'vex-dialog-button-danger',
+        click: function() {
+          self.emit('clearSettings');
+          vex.dialog.close();
+        }
+      },
+      Object.assign({}, vex.dialog.buttons.NO, { text: '取消', className: 'vex-dialog-button-secondary' }),
+      Object.assign({}, vex.dialog.buttons.YES, { text: '保存', className: 'vex-dialog-button-primary' })
+    ],
+    callback: function(data) {
+      if (data) {
+        self.emit('saveSettings', data)
+      }
+    }
+  })
 }
-  
+
 module.exports = Controls
-},{"events":16,"hyperscript":19,"inherits":21}],45:[function(require,module,exports){
+},{"./../../../less/vex-theme-plain.css":1,"./../../../less/vex.css":2,"events":16,"hyperscript":19,"inherits":21,"vex-js":28}],45:[function(require,module,exports){
 var h = require('hyperscript')
 
 var mixer = require('./../../lib/mixer')
@@ -7273,6 +7317,7 @@ var inherits = require('inherits')
 
 var Display = require('./display/display')
 var mixer = require('./lib/mixer')
+var { SrsRtcWhipWhepAsync } = require('./lib/srs')
 
 inherits(WBS, EventEmitter)
 
@@ -7284,24 +7329,58 @@ function WBS (element, opts) {
     element = document.querySelector(element)
   }
 
-  opts = opts || {}
+  // 获取本地存储的配置
+  const savedSettings = localStorage.getItem('wbsSettings');
+  const storageOpts = savedSettings ? JSON.parse(savedSettings) : {};
+  const defaultOpts = {
+    output: {
+      width: 640 * 3,
+      height: 360 * 3,
+      fps: 30,
+      bitrate: 3000000
+    },
+    server: { url: '' },
+    inputs: [],
+    injectStyles: true
+  };
+  opts = {
+    ...defaultOpts,
+    ...(opts || {}),
+    ...storageOpts
+  };
 
   var audioContext = new AudioContext()
-
   mixer.setAudioContext(audioContext)
-  opts.output = opts.output || {
-    width: 640 * 3,
-    height: 360 * 3,
-    fps: 30,
+  opts.output = {
+    ...opts.output,
     audioContext: audioContext
   }
-  opts.inputs = opts.inputs || []
-  opts.injectStyles = opts.injectStyles || true
-
+  self.opts = opts
+  self._srssdk = new SrsRtcWhipWhepAsync();
+  
   if (opts.injectStyles) require('./../less/wbs.css')
 
   self._display = new Display(element, opts)
-
+  self._display.on('saveSettings', (newSettings) => {
+    self.opts.server.url = newSettings.url
+    self.opts.output.width = parseInt(newSettings.width)
+    self.opts.output.height = parseInt(newSettings.height)
+    self.opts.output.fps = parseInt(newSettings.fps)
+    self.opts.output.bitrate = parseInt(newSettings.bitrate) * 1000
+    localStorage.setItem('wbsSettings', JSON.stringify({
+      ...self.opts.server,
+      output: {
+        width: parseInt(newSettings.width),
+        height: parseInt(newSettings.height),
+        fps: parseInt(newSettings.fps),
+        bitrate: parseInt(newSettings.bitrate) * 1000
+      }
+    }));
+  })
+  self._display.on('clearSettings', function (stream) {
+    localStorage.removeItem('wbsSettings');
+    location.reload();
+  })
   self._display.on('stream', function (stream) {
     self.emit('stream', stream)
   })
@@ -7310,9 +7389,30 @@ function WBS (element, opts) {
   })
 }
 
+// 添加推流方法
+WBS.prototype.startSRSStreaming = function(stream) {
+  const self = this;
+  self._srssdk.stream = stream;
+  self._srssdk.publish(self.opts.server.url, {
+    videoOnly: false,
+    audioOnly: false,
+    width: self.opts.output.width,
+    height: self.opts.output.height,
+    bitrate: self.opts.output.bitrate,
+    fps: self.opts.output.fps
+  }).catch(err => {
+    setTimeout(() => self.startStreaming(stream), 1000);
+  });
+}
+WBS.prototype.stopSRSStreaming = function() {
+  if (this._srssdk) {
+    this._srssdk.close();
+    this._srssdk = new SrsRtcWhipWhepAsync();
+  }
+}
 module.exports = WBS
 
-},{"./../less/wbs.css":3,"./display/display":43,"./lib/mixer":52,"events":16,"inherits":21}],51:[function(require,module,exports){
+},{"./../less/wbs.css":3,"./display/display":43,"./lib/mixer":52,"./lib/srs":55,"events":16,"inherits":21}],51:[function(require,module,exports){
 var vex = require('vex-js')
 vex.registerPlugin(require('vex-dialog'))
 
@@ -7440,7 +7540,7 @@ InputManager.prototype.getFile = function (cb) {
             '}',
         '</style>',
         '<div class="vex-custom-field-wrapper">',
-          '<input id="fileUpload" type="file" />',
+          '<input id="fileUpload" type="file" accept="image/jpeg, image/png, image/gif, image/svg+xml" />',
         '</div>'
     ].join(''),
     callback: function () {
@@ -7723,5 +7823,187 @@ Source.prototype.destroy = function () {
 }
   
 module.exports = Source
-},{"cuid":9,"events":16,"inherits":21}]},{},[50])(50)
+},{"cuid":9,"events":16,"inherits":21}],55:[function(require,module,exports){
+
+//
+// Copyright (c) 2013-2021 Winlin
+//
+// SPDX-License-Identifier: MIT
+//
+
+'use strict';
+function SrsRtcWhipWhepAsync() {
+  var self = {};
+
+  // See https://datatracker.ietf.org/doc/draft-ietf-wish-whip/
+  // @url The WebRTC url to publish with, for example:
+  //      http://localhost:1985/rtc/v1/whip/?app=live&stream=livestream
+  // @options The options to control playing, supports:
+  //      videoOnly: boolean, whether only play video, default to false.
+  //      audioOnly: boolean, whether only play audio, default to false.
+  self.publish = async function (url, options) {
+      if (url.indexOf('/whip/') === -1) throw new Error(`invalid WHIP url ${url}`);
+      if (options?.videoOnly && options?.audioOnly) throw new Error(`The videoOnly and audioOnly in options can't be true at the same time`);
+
+      // @see https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addStream#Migrating_to_addTrack
+      self.stream.getTracks().forEach(function (track) {
+          self.pc.addTrack(track);
+
+          // Notify about local track when stream is ok.
+          self.ontrack && self.ontrack({track: track});
+      }); 
+    /* self.stream.getVideoTracks().forEach(track => {
+        self.pc.addTransceiver(track, {
+            direction: 'sendonly',
+            streams: [self.stream],
+            sendEncodings: [{
+                scaleResolutionDownBy: 1.0,
+                maxBitrate: (options.bitrate * 1.5) || 5000000,
+                minBitrate: (options.bitrate * 0.8) || 2000000,
+                rid: 'f',
+                scalabilityMode: 'L1T1',
+                maxFramerate: options.fps || 30,
+                adaptation: { algorithm: 'none' }
+            }]
+        });
+    });
+    self.stream.getAudioTracks().forEach(track => {
+        self.pc.addTransceiver(track, {
+            direction: 'sendonly',
+            streams: [self.stream],
+            sendEncodings: [{
+                maxBitrate: 256000
+            }]
+        });
+    }); */
+
+      var offer = await self.pc.createOffer({
+        offerToReceiveAudio: false,
+        offerToReceiveVideo: false,
+        // 添加分辨率约束
+        // iceRestart: false,
+        // voiceActivityDetection: false,
+        codecPreferences: ['H264', 'VP8'],
+        width: options.width || 1280,
+        height: options.height || 720,
+        frameRate: options.fps || 30
+      });
+      await self.pc.setLocalDescription(offer);
+      const answer = await new Promise(function (resolve, reject) {
+          // console.log(`Generated offer: ${offer.sdp}`);
+
+          const xhr = new XMLHttpRequest();
+          xhr.onload = function() {
+              if (xhr.readyState !== xhr.DONE) return;
+              if (xhr.status !== 200 && xhr.status !== 201) return reject(xhr);
+              const data = xhr.responseText;
+              // console.log("Got answer: ", data);
+              return data.code ? reject(xhr) : resolve(data);
+          }
+          xhr.open('POST', url, true);
+          xhr.setRequestHeader('Content-type', 'application/sdp');
+          xhr.send(offer.sdp);
+      });
+      await self.pc.setRemoteDescription(
+          new RTCSessionDescription({type: 'answer', sdp: answer})
+      );
+
+      return self.__internal.parseId(url, offer.sdp, answer);
+  };
+
+  // See https://datatracker.ietf.org/doc/draft-ietf-wish-whip/
+  // @url The WebRTC url to play with, for example:
+  //      http://localhost:1985/rtc/v1/whep/?app=live&stream=livestream
+  // @options The options to control playing, supports:
+  //      videoOnly: boolean, whether only play video, default to false.
+  //      audioOnly: boolean, whether only play audio, default to false.
+  self.play = async function(url, options) {
+      if (url.indexOf('/whip-play/') === -1 && url.indexOf('/whep/') === -1) throw new Error(`invalid WHEP url ${url}`);
+      if (options?.videoOnly && options?.audioOnly) throw new Error(`The videoOnly and audioOnly in options can't be true at the same time`);
+
+      if (!options?.videoOnly) self.pc.addTransceiver("audio", {direction: "recvonly"});
+      if (!options?.audioOnly) self.pc.addTransceiver("video", {direction: "recvonly"});
+
+      var offer = await self.pc.createOffer();
+      await self.pc.setLocalDescription(offer);
+      const answer = await new Promise(function(resolve, reject) {
+          // console.log(`Generated offer: ${offer.sdp}`);
+
+          const xhr = new XMLHttpRequest();
+          xhr.onload = function() {
+              if (xhr.readyState !== xhr.DONE) return;
+              if (xhr.status !== 200 && xhr.status !== 201) return reject(xhr);
+              const data = xhr.responseText;
+              // console.log("Got answer: ", data);
+              return data.code ? reject(xhr) : resolve(data);
+          }
+          xhr.open('POST', url, true);
+          xhr.setRequestHeader('Content-type', 'application/sdp');
+          xhr.send(offer.sdp);
+      });
+      await self.pc.setRemoteDescription(
+          new RTCSessionDescription({type: 'answer', sdp: answer})
+      );
+
+      return self.__internal.parseId(url, offer.sdp, answer);
+  };
+
+  // Close the publisher.
+  self.close = function () {
+      self.pc && self.pc.close();
+      self.pc = null;
+  };
+
+  // The callback when got local stream.
+  // @see https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addStream#Migrating_to_addTrack
+  self.ontrack = function (event) {
+      // Add track to stream of SDK.
+      self.stream.addTrack(event.track);
+  };
+
+  self.pc = new RTCPeerConnection({
+    bundlePolicy: 'max-bundle',  // 合并多个轨道到单个传输通道（减少端口占用）
+    rtcpMuxPolicy: 'require',    // RTCP与RTP复用同一端口（NAT穿透必需）
+    encodedInsertableStreams: false,
+    // peerIdentity: 'fixed-bitrate',
+    // forceNegotiatedDtlsSrtp: true,
+    // sdpSemantics: 'unified-plan',
+    iceTransportPolicy: 'all',
+    iceServers: []
+  });
+
+  // To keep api consistent between player and publisher.
+  // @see https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addStream#Migrating_to_addTrack
+  // @see https://webrtc.org/getting-started/media-devices
+  self.stream = null;
+
+  // Internal APIs.
+  self.__internal = {
+      parseId: (url, offer, answer) => {
+          let sessionid = offer.substr(offer.indexOf('a=ice-ufrag:') + 'a=ice-ufrag:'.length);
+          sessionid = sessionid.substr(0, sessionid.indexOf('\n') - 1) + ':';
+          sessionid += answer.substr(answer.indexOf('a=ice-ufrag:') + 'a=ice-ufrag:'.length);
+          sessionid = sessionid.substr(0, sessionid.indexOf('\n'));
+
+          //const a = document.createElement("a");
+          //a.href = url;
+          return {
+              sessionid: sessionid, // Should be ice-ufrag of answer:offer.
+              //simulator: a.protocol + '//' + a.host + '/rtc/v1/nack/',
+          };
+      },
+  };
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/ontrack
+  self.pc.ontrack = function(event) {
+      if (self.ontrack) {
+          self.ontrack(event);
+      }
+  };
+
+  return self;
+}
+
+module.exports = { SrsRtcWhipWhepAsync }
+},{}]},{},[50])(50)
 });

@@ -170,4 +170,25 @@
 
 .vex-loading-spinner.vex-theme-plain {
   height: 2.5em;
-  width: 2.5em; }
+  width: 2.5em;
+}
+
+.vex-dialog-button-danger {
+  background: #dc3545 !important;
+  color: white !important;
+  order: 1; /* 左侧排列 */
+}
+
+.vex-dialog-button-primary {
+  order: 3; /* 最右侧 */
+}
+
+.vex-dialog-button-secondary {
+  order: 2; /* 中间 */
+}
+
+.vex-dialog-buttons {
+  display: flex;
+  justify-content: flex-end; /* 整体右对齐 */
+  gap: 10px;
+}

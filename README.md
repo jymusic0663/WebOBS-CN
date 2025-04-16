@@ -21,6 +21,13 @@
 5. 点击切换不同场景和活动视频源
 6. "开始直播"会生成可用于其他模块的媒体流输出
 
+## 更新信息
+
++ [2025-04-18]
+  - 增加推流到srs直播服务器功能
+  - 增加设置窗口
+  - 增加浏览器本地存储直播参数配置
+
 ## 安装
 
 ```html
@@ -56,10 +63,14 @@
 
 ```
 {
+  server: {
+    url: "https://live.example.com/rtc/v1/whip/?app=live&stream=livestream&secret=your_secret",  // srs 直播服务器的whip地址
+  },
   output: {
-    width: 1200,  // 分辨率
-    height: 900,
-    fps: 40       // 每秒帧数
+    width: 1280, // 分辨率
+    height: 720,
+    fps: 30, // 帧率
+    bitrate: 3000000 // 码率
   },
   injectStyles: true, // 是否注入 WBS 的 CSS 样式
   inputs: [array of input devices - see below]

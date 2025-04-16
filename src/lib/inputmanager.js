@@ -125,7 +125,7 @@ InputManager.prototype.getFile = function (cb) {
             '}',
         '</style>',
         '<div class="vex-custom-field-wrapper">',
-          '<input id="fileUpload" type="file" />',
+          '<input id="fileUpload" type="file" accept="image/jpeg, image/png, image/gif, image/svg+xml" />',
         '</div>'
     ].join(''),
     callback: function () {

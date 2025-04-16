@@ -21,7 +21,8 @@
     "browserify": "^17.0.0",
     "browserify-css": "^0.10.0",
     "standard": "^8.6.0",
-    "tape": "^4.6.3"
+    "tape": "^4.6.3",
+    "watchify": "^4.0.0"
   },
   "dependencies": {
     "cuid": "^2.1.1",

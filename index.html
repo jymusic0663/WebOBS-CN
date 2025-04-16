@@ -27,7 +27,7 @@
 
 <body>
   <h1 id="intro" style="font-family: Arial;">点击任意位置加载</h1>
-  <div class="testDiv"></div>
+  <div class="wbsArea"></div>
 </body>
 <script src="dist/wbs.js"></script>
 <script>
@@ -36,7 +36,25 @@
     if (!intro) return
     intro.parentElement.removeChild(intro)
 
-    var wbs = new WBS('div')
+    var wbs = new WBS('.wbsArea', {
+      server: {
+        url: "",  // srs直播服务器whip地址
+      },
+      output: {
+        width: 1920,
+        height: 1080,
+        fps: 30,
+        bitrate: 3000000
+      }
+    })
+    wbs.on('stream', function (stream) {
+      // 开始推流。这里的stream是一个MediaStream对象
+      wbs.startSRSStreaming(stream)
+    })
+    wbs.on('stopstream', function () {
+      // 停止推流
+      wbs.stopSRSStreaming()
+    })
   })
 </script>
 
