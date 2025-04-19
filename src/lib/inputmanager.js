@@ -9,7 +9,6 @@ vex.defaultOptions.className = 'vex-theme-plain'
 var h = require('hyperscript')
 var getusermedia = require('getusermedia')
 var enumerateDevices = require('enumerate-devices')
-
 function getMediaPermissions (cb) {
   getusermedia({audio: true, video:true}, cb)
 }
@@ -56,7 +55,7 @@ function InputManager (opts) {
 
   // add default inputs
   getMediaPermissions(function (err) {
-    if (err) return console.error(err)
+    if (err) console.error(err)
 
     self.inputs.push({
       id: ++counter,
@@ -96,11 +95,19 @@ function InputManager (opts) {
           id: ++counter,
           name: deviceName,
           getStream: function (cb) {
-            getusermedia({
-              audio: contains(device.kind, 'audio') ? {exact: device.deviceId}: undefined,
-              video: contains(device.kind, 'video') ? {exact: device.deviceId} : undefined
-            }, function (err, stream) {
-              cb(err, deviceName, hasVideo, stream)
+            // 添加对音频设备的支持
+            const constraints = {
+              audio: contains(device.kind, 'audio') ? { deviceId: device.deviceId } : false,
+              video: contains(device.kind, 'video') ? { deviceId: device.deviceId } : false
+            };
+            
+            // 对火狐浏览器的兼容处理
+            if (navigator.mozGetUserMedia) {
+              constraints.audio = constraints.audio ? true : false;
+              constraints.video = constraints.video ? true : false;
+            }
+            getusermedia(constraints, function (err, stream) {
+              cb(err, deviceName, hasVideo, stream);
             })
           }
         })

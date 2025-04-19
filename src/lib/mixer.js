@@ -1,43 +1,50 @@
-var VolumeMeter = require('volume-meter')
+var VolumeMeter = require("volume-meter");
 
-var EventEmitter = require('events').EventEmitter
-var inherits = require('inherits')
+var EventEmitter = require("events").EventEmitter;
+var inherits = require("inherits");
 
-inherits(Mixer, EventEmitter)
+inherits(Mixer, EventEmitter);
 
-function Mixer () {
-  var self = this
+function Mixer() {
+  var self = this;
 
-  self.audioContext = null
-  self.analyzer = null
+  self.audioContext = null;
+  self.analyzer = null;
 }
 
 Mixer.prototype.setAudioContext = function (audioContext) {
-  var self = this
-  
-  self.audioContext = audioContext
-}
+  var self = this;
+
+  self.audioContext = audioContext;
+};
 
 Mixer.prototype.addStream = function (sourceObj, sourceNode, destNode) {
-  var self = this
-  
-  self.emit('sourceAdd', sourceObj)
-  
-  var meter = VolumeMeter(self.audioContext, { tweenIn: 2, tweenOut: 6 }, function (volume) {
-    self.emit('sourceVolume', sourceObj, volume)
-  })
-  
-  sourceNode.connect(meter)
-  sourceNode.connect(destNode)
+  var self = this;
 
-  console.log('added')
-}
+  self.emit("sourceAdd", sourceObj);
+
+  var meter = VolumeMeter(
+    self.audioContext,
+    { tweenIn: 2, tweenOut: 6 },
+    function (volume) {
+      self.emit("sourceVolume", sourceObj, volume);
+    }
+  );
+
+  // 确保音频节点正确连接
+  if (sourceNode instanceof AudioNode) {
+    sourceNode.connect(meter);
+    sourceNode.connect(destNode);
+  }
+
+  console.log("added");
+};
 
 Mixer.prototype.removeStream = function (id) {
-  var self = this
-  
-  self.emit('sourceRemove', id)
-  console.log('removed')
-}
-  
-module.exports = new Mixer()
+  var self = this;
+
+  self.emit("sourceRemove", id);
+  console.log("removed");
+};
+
+module.exports = new Mixer();
