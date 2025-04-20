@@ -20,6 +20,13 @@ Mixer.prototype.setAudioContext = function (audioContext) {
 
 Mixer.prototype.addStream = function (sourceObj, sourceNode, destNode) {
   var self = this;
+  // 添加音频流检测
+  //if (!sourceObj.hasAudio) return;
+  const stream = sourceObj.stream.stream || sourceObj.stream;
+  if (!stream.getAudioTracks || stream.getAudioTracks().length === 0) {
+    console.warn('No audio tracks in stream');
+    return;
+  }
 
   self.emit("sourceAdd", sourceObj);
 

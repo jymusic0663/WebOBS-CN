@@ -68,7 +68,11 @@ function InputManager (opts) {
           reader.onload = function(event) {
             console.log('图像已加载')
             imageElement.src = event.target.result
-            cb(null, file.name, true, imageElement)
+            cb(null, file.name, true, {
+              stream: imageElement,
+              hasAudio: false,
+              hasVideo: true
+            })
           }
           reader.readAsDataURL(file)
         })
@@ -81,7 +85,38 @@ function InputManager (opts) {
         name: '窗口获取',
         getStream: function (cb) {
           navigator.mediaDevices.getDisplayMedia({ audio: false, video: true }).then(stream => {
-            cb(null, '窗口获取', true, stream)
+            cb(null, '窗口获取', true, {
+              stream: stream,
+              hasAudio: false,
+              hasVideo: true
+            })
+          })
+        }
+      })
+      self.inputs.push({
+        id: ++counter,
+        name: '窗口获取（含音频）',
+        getStream: function (cb) {
+          navigator.mediaDevices.getDisplayMedia({ 
+            audio: {
+              autoGainControl: false,
+              noiseSuppression: false,
+              echoCancellation: false,
+              // deviceId: { ideal: 'default' } 
+            },
+            video: true 
+          }).then(stream => {
+            // 添加音频轨道检测
+            const audioTracks = stream.getAudioTracks();
+            const videoTracks = stream.getVideoTracks();
+            if (audioTracks.length === 0) {
+              console.warn('捕获的流中未发现音频轨道');
+            }
+            cb(null, '窗口获取（含音频）', videoTracks.length > 0, {
+              stream: stream,
+              hasAudio: audioTracks.length > 0,
+              hasVideo: videoTracks.length > 0
+            });
           })
         }
       })
@@ -107,7 +142,11 @@ function InputManager (opts) {
               constraints.video = constraints.video ? true : false;
             }
             getusermedia(constraints, function (err, stream) {
-              cb(err, deviceName, hasVideo, stream);
+              cb(err, deviceName, hasVideo, {
+                stream: stream,
+                hasAudio: contains(device.kind, 'audio'),
+                hasVideo: hasVideo
+              });
             })
           }
         })

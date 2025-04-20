@@ -7482,7 +7482,11 @@ function InputManager (opts) {
           reader.onload = function(event) {
             console.log('图像已加载')
             imageElement.src = event.target.result
-            cb(null, file.name, true, imageElement)
+            cb(null, file.name, true, {
+              stream: imageElement,
+              hasAudio: false,
+              hasVideo: true
+            })
           }
           reader.readAsDataURL(file)
         })
@@ -7495,7 +7499,38 @@ function InputManager (opts) {
         name: '窗口获取',
         getStream: function (cb) {
           navigator.mediaDevices.getDisplayMedia({ audio: false, video: true }).then(stream => {
-            cb(null, '窗口获取', true, stream)
+            cb(null, '窗口获取', true, {
+              stream: stream,
+              hasAudio: false,
+              hasVideo: true
+            })
+          })
+        }
+      })
+      self.inputs.push({
+        id: ++counter,
+        name: '窗口获取（含音频）',
+        getStream: function (cb) {
+          navigator.mediaDevices.getDisplayMedia({ 
+            audio: {
+              autoGainControl: false,
+              noiseSuppression: false,
+              echoCancellation: false,
+              // deviceId: { ideal: 'default' } 
+            },
+            video: true 
+          }).then(stream => {
+            // 添加音频轨道检测
+            const audioTracks = stream.getAudioTracks();
+            const videoTracks = stream.getVideoTracks();
+            if (audioTracks.length === 0) {
+              console.warn('捕获的流中未发现音频轨道');
+            }
+            cb(null, '窗口获取（含音频）', videoTracks.length > 0, {
+              stream: stream,
+              hasAudio: audioTracks.length > 0,
+              hasVideo: videoTracks.length > 0
+            });
           })
         }
       })
@@ -7521,7 +7556,11 @@ function InputManager (opts) {
               constraints.video = constraints.video ? true : false;
             }
             getusermedia(constraints, function (err, stream) {
-              cb(err, deviceName, hasVideo, stream);
+              cb(err, deviceName, hasVideo, {
+                stream: stream,
+                hasAudio: contains(device.kind, 'audio'),
+                hasVideo: hasVideo
+              });
             })
           }
         })
@@ -7613,6 +7652,13 @@ Mixer.prototype.setAudioContext = function (audioContext) {
 
 Mixer.prototype.addStream = function (sourceObj, sourceNode, destNode) {
   var self = this;
+  // 添加音频流检测
+  //if (!sourceObj.hasAudio) return;
+  const stream = sourceObj.stream.stream || sourceObj.stream;
+  if (!stream.getAudioTracks || stream.getAudioTracks().length === 0) {
+    console.warn('No audio tracks in stream');
+    return;
+  }
 
   self.emit("sourceAdd", sourceObj);
 
@@ -7681,15 +7727,30 @@ Scene.prototype.addSource = function (source, opts) {
     opts.mute = true
   }
 
-  if (!source.hasVideo) {
+  // if (!source.hasVideo) {
+  if (source.hasAudio) { 
     source.audioEffect = mixer.addStream.bind(mixer, source)
     opts.audioEffect = source.audioEffect
+    opts.mute = false
   }
+
+  const mediaStream = source.stream.stream || source.stream;
+  const isMediaElement = mediaStream instanceof HTMLMediaElement || mediaStream instanceof HTMLImageElement;
   
-  if (source.stream instanceof HTMLMediaElement || source.stream instanceof HTMLImageElement) {
-    self._output.addMediaElement(source.id, source.stream, opts)
+  if (isMediaElement) {
+    self._output.addMediaElement(source.id, mediaStream, {
+      ...opts,
+      hasAudio: source.hasAudio
+    })
   } else {
-    self._output.addStream(source.stream, opts)
+    if (typeof mediaStream.getVideoTracks !== 'function') {
+      console.error('无效的流对象:', mediaStream);
+      return;
+    }
+    self._output.addStream(mediaStream, {
+      ...opts,
+      hasAudio: source.hasAudio
+    })
   }
   self.sources.push(source)
 
@@ -7715,8 +7776,8 @@ Scene.prototype.reorderSource = function (index, source) {
   var self = this
   
   index = self.sources.length - (index+1)
-  
-  self._output.updateIndex(source.stream, index)
+  const mediaStream = source.stream.stream || source.stream;
+  self._output.updateIndex(mediaStream, index)
   
   for (var i=0; i<self.sources.length; i++) {
     if (self.sources[i].id === source.id) {
@@ -7749,29 +7810,30 @@ Scene.prototype.show = function () {
   
   for (var i=0; i<self.sources.length; i++) {
     var isMediaElement = self.sources[i] instanceof HTMLMediaElement
+    const mediaStream = self.sources[i].stream.stream || self.sources[i].stream;
     if (isMediaElement) {
       if (self.sources[i].mover) {
-        self._output.addMediaElement(self.sources[i].id, self.sources[i].stream, {
+        self._output.addMediaElement(self.sources[i].id, mediaStream, {
           draw: self.sources[i].mover.draw.bind(self.sources[i].mover),
           audioEffect: mixer.addStream.bind(mixer, self.sources[i]),
-          mute: true
+          mute: !self.sources[i].hasAudio
         })
         self.sources[i].mover.show()
       } else {
-        self._output.addMediaElement(self.sources[i].id, self.sources[i].stream, {
+        self._output.addMediaElement(self.sources[i].id, mediaStream, {
           audioEffect: mixer.addStream.bind(mixer, self.sources[i])
         })
       }
     } else {
       if (self.sources[i].mover) {
-        self._output.addStream(self.sources[i].stream, {
+        self._output.addStream(mediaStream, {
           draw: self.sources[i].mover.draw.bind(self.sources[i].mover),
           audioEffect: mixer.addStream.bind(mixer, self.sources[i]),
-          mute: true
+          mute: !self.sources[i].hasAudio
         })
         self.sources[i].mover.show()
       } else {
-        self._output.addStream(self.sources[i].stream, {
+        self._output.addStream(mediaStream, {
           audioEffect: mixer.addStream.bind(mixer, self.sources[i])
         })
       }
@@ -7783,7 +7845,8 @@ Scene.prototype.hide = function () {
   var self = this
   
   for (var i=0; i<self.sources.length; i++) {
-    if (self.sources[i].stream instanceof HTMLMediaElement) {
+    const mediaStream = self.sources[i].stream.stream || self.sources[i].stream;
+    if (mediaStream instanceof HTMLMediaElement) {
       self._output.removeStream(self.sources[i].id)
     } else {
       self._output.removeStream(self.sources[i].stream)
@@ -7816,13 +7879,14 @@ var cuid = require('cuid')
 
 inherits(Source, EventEmitter)
 
-function Source (stream, name, hasVideo) {
+function Source (streamData, name, hasVideo) {
   var self = this
 
-  self.stream = stream || null
-  self.id = stream.id || cuid()
+  self.stream = streamData.stream || streamData || null
+  self.id = self.stream.id || cuid()
   self.name = name || '来源'
-  self.hasVideo = hasVideo
+  self.hasVideo = ('hasVideo' in streamData) ? streamData.hasVideo : false;
+  self.hasAudio = ('hasAudio' in streamData) ? streamData.hasAudio : false;
   self.mover = null
 }
 

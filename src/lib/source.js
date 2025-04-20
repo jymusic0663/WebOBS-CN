@@ -6,13 +6,14 @@ var cuid = require('cuid')
 
 inherits(Source, EventEmitter)
 
-function Source (stream, name, hasVideo) {
+function Source (streamData, name, hasVideo) {
   var self = this
 
-  self.stream = stream || null
-  self.id = stream.id || cuid()
+  self.stream = streamData.stream || streamData || null
+  self.id = self.stream.id || cuid()
   self.name = name || '来源'
-  self.hasVideo = hasVideo
+  self.hasVideo = ('hasVideo' in streamData) ? streamData.hasVideo : false;
+  self.hasAudio = ('hasAudio' in streamData) ? streamData.hasAudio : false;
   self.mover = null
 }
 

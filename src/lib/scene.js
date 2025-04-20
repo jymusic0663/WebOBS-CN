@@ -36,15 +36,30 @@ Scene.prototype.addSource = function (source, opts) {
     opts.mute = true
   }
 
-  if (!source.hasVideo) {
+  // if (!source.hasVideo) {
+  if (source.hasAudio) { 
     source.audioEffect = mixer.addStream.bind(mixer, source)
     opts.audioEffect = source.audioEffect
+    opts.mute = false
   }
+
+  const mediaStream = source.stream.stream || source.stream;
+  const isMediaElement = mediaStream instanceof HTMLMediaElement || mediaStream instanceof HTMLImageElement;
   
-  if (source.stream instanceof HTMLMediaElement || source.stream instanceof HTMLImageElement) {
-    self._output.addMediaElement(source.id, source.stream, opts)
+  if (isMediaElement) {
+    self._output.addMediaElement(source.id, mediaStream, {
+      ...opts,
+      hasAudio: source.hasAudio
+    })
   } else {
-    self._output.addStream(source.stream, opts)
+    if (typeof mediaStream.getVideoTracks !== 'function') {
+      console.error('无效的流对象:', mediaStream);
+      return;
+    }
+    self._output.addStream(mediaStream, {
+      ...opts,
+      hasAudio: source.hasAudio
+    })
   }
   self.sources.push(source)
 
@@ -70,8 +85,8 @@ Scene.prototype.reorderSource = function (index, source) {
   var self = this
   
   index = self.sources.length - (index+1)
-  
-  self._output.updateIndex(source.stream, index)
+  const mediaStream = source.stream.stream || source.stream;
+  self._output.updateIndex(mediaStream, index)
   
   for (var i=0; i<self.sources.length; i++) {
     if (self.sources[i].id === source.id) {
@@ -104,29 +119,30 @@ Scene.prototype.show = function () {
   
   for (var i=0; i<self.sources.length; i++) {
     var isMediaElement = self.sources[i] instanceof HTMLMediaElement
+    const mediaStream = self.sources[i].stream.stream || self.sources[i].stream;
     if (isMediaElement) {
       if (self.sources[i].mover) {
-        self._output.addMediaElement(self.sources[i].id, self.sources[i].stream, {
+        self._output.addMediaElement(self.sources[i].id, mediaStream, {
           draw: self.sources[i].mover.draw.bind(self.sources[i].mover),
           audioEffect: mixer.addStream.bind(mixer, self.sources[i]),
-          mute: true
+          mute: !self.sources[i].hasAudio
         })
         self.sources[i].mover.show()
       } else {
-        self._output.addMediaElement(self.sources[i].id, self.sources[i].stream, {
+        self._output.addMediaElement(self.sources[i].id, mediaStream, {
           audioEffect: mixer.addStream.bind(mixer, self.sources[i])
         })
       }
     } else {
       if (self.sources[i].mover) {
-        self._output.addStream(self.sources[i].stream, {
+        self._output.addStream(mediaStream, {
           draw: self.sources[i].mover.draw.bind(self.sources[i].mover),
           audioEffect: mixer.addStream.bind(mixer, self.sources[i]),
-          mute: true
+          mute: !self.sources[i].hasAudio
         })
         self.sources[i].mover.show()
       } else {
-        self._output.addStream(self.sources[i].stream, {
+        self._output.addStream(mediaStream, {
           audioEffect: mixer.addStream.bind(mixer, self.sources[i])
         })
       }
@@ -138,7 +154,8 @@ Scene.prototype.hide = function () {
   var self = this
   
   for (var i=0; i<self.sources.length; i++) {
-    if (self.sources[i].stream instanceof HTMLMediaElement) {
+    const mediaStream = self.sources[i].stream.stream || self.sources[i].stream;
+    if (mediaStream instanceof HTMLMediaElement) {
       self._output.removeStream(self.sources[i].id)
     } else {
       self._output.removeStream(self.sources[i].stream)
