@@ -1,6 +1,7 @@
 <html lang="zh">
 
 <head>
+  <meta charset="UTF-8" />
   <title>WebOBS导播台</title>
   <style>
     #intro {
@@ -10,6 +11,7 @@
       transform: translate(-50%, -50%);
       font-size: 30px;
     }
+
     .testDiv {
       width: 100%;
       height: 100%;
@@ -30,6 +32,10 @@
   <div class="wbsArea"></div>
 </body>
 <script src="dist/wbs.js"></script>
+<!-- 引入srs推流器 -->
+<script src="libs/srs.sdk.js"></script>
+<!-- 引入录制器 -->
+<script src="libs/recorder.js"></script>
 <script>
   window.addEventListener('click', () => {
     var intro = document.querySelector('#intro')
@@ -47,6 +53,30 @@
         bitrate: 3000000
       }
     })
+
+    // 直播推流
+    //var publisher = new _SrsRtc.SrsRtcPublisherAsync();
+    var publisher = new _SrsRtc.SrsRtcWhipWhepAsync();
+    WBS.prototype.startSRSStreaming = function (stream) {
+      const self = this;
+      publisher.stream = stream;
+      publisher.publish(self.opts.server.url, {
+        videoOnly: false,
+        audioOnly: false,
+        width: self.opts.output.width,
+        height: self.opts.output.height,
+        bitrate: self.opts.output.bitrate,
+        fps: self.opts.output.fps
+      }).catch(err => {
+        setTimeout(() => self.startStreaming(stream), 1000);
+      });
+    }
+    WBS.prototype.stopSRSStreaming = function () {
+      if (publisher) {
+        publisher.close();
+        publisher = new _SrsRtc.SrsRtcWhipWhepAsync();
+      }
+    }
     wbs.on('stream', function (stream) {
       // 开始推流。这里的stream是一个MediaStream对象
       wbs.startSRSStreaming(stream)
@@ -54,6 +84,18 @@
     wbs.on('stopstream', function () {
       // 停止推流
       wbs.stopSRSStreaming()
+    })
+
+    // 录制
+    var recorder = new WBSRecorder()
+    wbs.on('startrecord', function (stream) {
+      // 当用户点击“开始录制”时触发
+      recorder.stream = stream
+      recorder.start()
+    })
+    wbs.on('stoprecord', function () {
+      // 当用户点击“停止录制”时触发
+      recorder.stop()
     })
   })
 </script>

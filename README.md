@@ -23,6 +23,12 @@
 
 ## 更新信息
 
++ v1.1.6
+  - srs推流功能解耦
+  - 增加srs推流rtc功能
+  - 添加本地录制功能
+  - 修复index.html编码问题
+  - 修复设置里读取不到保存的地址信息
 + v1.1.5
   - 增加含音频的窗口获取源
 + v1.1.4
@@ -35,6 +41,10 @@
 
 ```html
 <script src="wbs.js"></script>
+<!-- 引入srs推流器 -->
+<script src="libs/srs.sdk.js"></script>
+<!-- 引入录制器 -->
+<script src="libs/recorder.js"></script>
 ```
 
 ## 使用
@@ -43,13 +53,44 @@
 <div></div>
 <script>
   var wbs = new WBS('div') // Element or selector to place the UI
-  
+
+  // 推流到srs直播服务器
+  //var publisher = new _SrsRtc.SrsRtcPublisherAsync();
+  var publisher = new _SrsRtc.SrsRtcWhipWhepAsync();
+
   wbs.on('stream', function (stream) {
     // 当用户点击“开始直播”时触发
     // stream 是输出的媒体流
+    publisher.stream = stream;
+    publisher.publish(wbs.opts.server.url, {
+      videoOnly: false,
+      audioOnly: false,
+      width: wbs.opts.output.width,
+      height: wbs.opts.output.height,
+      bitrate: wbs.opts.output.bitrate,
+      fps: wbs.opts.output.fps
+    }).catch(err => {
+      console.error(err);
+    });
   })
   wbs.on('stopstream', function () {
     // 当用户点击“停止直播”时触发
+    if (publisher) {
+      publisher.close();
+      publisher = new _SrsRtc.SrsRtcWhipWhepAsync();
+    }
+  })
+
+  // 录制
+  var recorder = new WBSRecorder()
+  wbs.on('startrecord', function (stream) {
+    // 当用户点击“开始录制”时触发
+    recorder.stream = stream
+    recorder.start()
+  })
+  wbs.on('stoprecord', function () {
+    // 当用户点击“停止录制”时触发
+    recorder.stop()
   })
 </script>
 ```

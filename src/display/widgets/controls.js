@@ -13,6 +13,11 @@ function Controls (opts) {
   self._startedStream = false
   self._startButton = h('button.stopped', {onclick: self.clickStream.bind(self)}, '开始直播')
   self._startButton.style.marginTop = '10px'
+
+  // 添加录制按钮
+  self._startedRecording = false
+  self._recordButton = h('button.default', {onclick: self.clickRecord.bind(self)}, '开始录制')
+  self._recordButton.style.marginTop = '5px'
   
   // 添加设置按钮
   self._settingsButton = h('button.settings-btn', {onclick: self.showSettings.bind(self)}, '设置')
@@ -24,6 +29,7 @@ function Controls (opts) {
   self.element = h('div.controls',
                     label,
                     self._startButton,
+                    self._recordButton,
                     self._settingsButton
                   )
 }
@@ -46,7 +52,16 @@ Controls.prototype.clickStream = function () {
 
 Controls.prototype.clickRecord = function () {
   var self = this
-  // TODO
+  if (self._startedRecording) {
+    self.emit('stoprecord')
+    self._recordButton.innerHTML = '开始录制'
+    self._recordButton.className = 'default'
+  } else {
+    self.emit('startrecord')
+    self._recordButton.innerHTML = '停止录制'
+    self._recordButton.className = 'started'
+  }
+  self._startedRecording = !self._startedRecording
 }
 
 // 添加设置弹窗方法

@@ -61,6 +61,12 @@ function Display (element, opts) {
   self.controls.on('stopstream', function () {
     self.emit('stopstream')
   })
+  self.controls.on('startrecord', function () {
+    self.emit('startrecord', self._merger.result)
+  })
+  self.controls.on('stoprecord', function () {
+    self.emit('stoprecord')
+  })
   self.controls.on('saveSettings', (newSettings) => {
     self.emit('saveSettings', newSettings)
   })

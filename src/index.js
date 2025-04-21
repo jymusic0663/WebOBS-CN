@@ -3,7 +3,6 @@ var inherits = require('inherits')
 
 var Display = require('./display/display')
 var mixer = require('./lib/mixer')
-var { SrsRtcWhipWhepAsync } = require('./lib/srs')
 
 inherits(WBS, EventEmitter)
 
@@ -42,7 +41,6 @@ function WBS (element, opts) {
     audioContext: audioContext
   }
   self.opts = opts
-  self._srssdk = new SrsRtcWhipWhepAsync();
   
   if (opts.injectStyles) require('./../less/wbs.css')
 
@@ -54,7 +52,7 @@ function WBS (element, opts) {
     self.opts.output.fps = parseInt(newSettings.fps)
     self.opts.output.bitrate = parseInt(newSettings.bitrate) * 1000
     localStorage.setItem('wbsSettings', JSON.stringify({
-      ...self.opts.server,
+      server: { ...self.opts.server },
       output: {
         width: parseInt(newSettings.width),
         height: parseInt(newSettings.height),
@@ -73,27 +71,12 @@ function WBS (element, opts) {
   self._display.on('stopstream', function () {
     self.emit('stopstream')
   })
+  self._display.on('startrecord', function (stream) {
+    self.emit('startrecord', stream)
+  })
+  self._display.on('stoprecord', function () {
+    self.emit('stoprecord')
+  })
 }
 
-// 添加推流方法
-WBS.prototype.startSRSStreaming = function(stream) {
-  const self = this;
-  self._srssdk.stream = stream;
-  self._srssdk.publish(self.opts.server.url, {
-    videoOnly: false,
-    audioOnly: false,
-    width: self.opts.output.width,
-    height: self.opts.output.height,
-    bitrate: self.opts.output.bitrate,
-    fps: self.opts.output.fps
-  }).catch(err => {
-    setTimeout(() => self.startStreaming(stream), 1000);
-  });
-}
-WBS.prototype.stopSRSStreaming = function() {
-  if (this._srssdk) {
-    this._srssdk.close();
-    this._srssdk = new SrsRtcWhipWhepAsync();
-  }
-}
 module.exports = WBS

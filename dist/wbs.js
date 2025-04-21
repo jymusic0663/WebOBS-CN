@@ -6947,6 +6947,12 @@ function Display (element, opts) {
   self.controls.on('stopstream', function () {
     self.emit('stopstream')
   })
+  self.controls.on('startrecord', function () {
+    self.emit('startrecord', self._merger.result)
+  })
+  self.controls.on('stoprecord', function () {
+    self.emit('stoprecord')
+  })
   self.controls.on('saveSettings', (newSettings) => {
     self.emit('saveSettings', newSettings)
   })
@@ -6978,6 +6984,11 @@ function Controls (opts) {
   self._startedStream = false
   self._startButton = h('button.stopped', {onclick: self.clickStream.bind(self)}, '开始直播')
   self._startButton.style.marginTop = '10px'
+
+  // 添加录制按钮
+  self._startedRecording = false
+  self._recordButton = h('button.default', {onclick: self.clickRecord.bind(self)}, '开始录制')
+  self._recordButton.style.marginTop = '5px'
   
   // 添加设置按钮
   self._settingsButton = h('button.settings-btn', {onclick: self.showSettings.bind(self)}, '设置')
@@ -6989,6 +7000,7 @@ function Controls (opts) {
   self.element = h('div.controls',
                     label,
                     self._startButton,
+                    self._recordButton,
                     self._settingsButton
                   )
 }
@@ -7011,7 +7023,16 @@ Controls.prototype.clickStream = function () {
 
 Controls.prototype.clickRecord = function () {
   var self = this
-  // TODO
+  if (self._startedRecording) {
+    self.emit('stoprecord')
+    self._recordButton.innerHTML = '开始录制'
+    self._recordButton.className = 'default'
+  } else {
+    self.emit('startrecord')
+    self._recordButton.innerHTML = '停止录制'
+    self._recordButton.className = 'started'
+  }
+  self._startedRecording = !self._startedRecording
 }
 
 // 添加设置弹窗方法
@@ -7316,7 +7337,6 @@ var inherits = require('inherits')
 
 var Display = require('./display/display')
 var mixer = require('./lib/mixer')
-var { SrsRtcWhipWhepAsync } = require('./lib/srs')
 
 inherits(WBS, EventEmitter)
 
@@ -7355,7 +7375,6 @@ function WBS (element, opts) {
     audioContext: audioContext
   }
   self.opts = opts
-  self._srssdk = new SrsRtcWhipWhepAsync();
   
   if (opts.injectStyles) require('./../less/wbs.css')
 
@@ -7367,7 +7386,7 @@ function WBS (element, opts) {
     self.opts.output.fps = parseInt(newSettings.fps)
     self.opts.output.bitrate = parseInt(newSettings.bitrate) * 1000
     localStorage.setItem('wbsSettings', JSON.stringify({
-      ...self.opts.server,
+      server: { ...self.opts.server },
       output: {
         width: parseInt(newSettings.width),
         height: parseInt(newSettings.height),
@@ -7386,32 +7405,17 @@ function WBS (element, opts) {
   self._display.on('stopstream', function () {
     self.emit('stopstream')
   })
+  self._display.on('startrecord', function (stream) {
+    self.emit('startrecord', stream)
+  })
+  self._display.on('stoprecord', function () {
+    self.emit('stoprecord')
+  })
 }
 
-// 添加推流方法
-WBS.prototype.startSRSStreaming = function(stream) {
-  const self = this;
-  self._srssdk.stream = stream;
-  self._srssdk.publish(self.opts.server.url, {
-    videoOnly: false,
-    audioOnly: false,
-    width: self.opts.output.width,
-    height: self.opts.output.height,
-    bitrate: self.opts.output.bitrate,
-    fps: self.opts.output.fps
-  }).catch(err => {
-    setTimeout(() => self.startStreaming(stream), 1000);
-  });
-}
-WBS.prototype.stopSRSStreaming = function() {
-  if (this._srssdk) {
-    this._srssdk.close();
-    this._srssdk = new SrsRtcWhipWhepAsync();
-  }
-}
 module.exports = WBS
 
-},{"./../less/wbs.css":3,"./display/display":43,"./lib/mixer":52,"./lib/srs":55,"events":16,"inherits":21}],51:[function(require,module,exports){
+},{"./../less/wbs.css":3,"./display/display":43,"./lib/mixer":52,"events":16,"inherits":21}],51:[function(require,module,exports){
 var vex = require('vex-js')
 vex.registerPlugin(require('vex-dialog'))
 
@@ -7901,187 +7905,5 @@ Source.prototype.destroy = function () {
 }
   
 module.exports = Source
-},{"cuid":9,"events":16,"inherits":21}],55:[function(require,module,exports){
-
-//
-// Copyright (c) 2013-2021 Winlin
-//
-// SPDX-License-Identifier: MIT
-//
-
-'use strict';
-function SrsRtcWhipWhepAsync() {
-  var self = {};
-
-  // See https://datatracker.ietf.org/doc/draft-ietf-wish-whip/
-  // @url The WebRTC url to publish with, for example:
-  //      http://localhost:1985/rtc/v1/whip/?app=live&stream=livestream
-  // @options The options to control playing, supports:
-  //      videoOnly: boolean, whether only play video, default to false.
-  //      audioOnly: boolean, whether only play audio, default to false.
-  self.publish = async function (url, options) {
-      if (url.indexOf('/whip/') === -1) throw new Error(`invalid WHIP url ${url}`);
-      if (options?.videoOnly && options?.audioOnly) throw new Error(`The videoOnly and audioOnly in options can't be true at the same time`);
-
-      // @see https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addStream#Migrating_to_addTrack
-      self.stream.getTracks().forEach(function (track) {
-          self.pc.addTrack(track);
-
-          // Notify about local track when stream is ok.
-          self.ontrack && self.ontrack({track: track});
-      }); 
-    /* self.stream.getVideoTracks().forEach(track => {
-        self.pc.addTransceiver(track, {
-            direction: 'sendonly',
-            streams: [self.stream],
-            sendEncodings: [{
-                scaleResolutionDownBy: 1.0,
-                maxBitrate: (options.bitrate * 1.5) || 5000000,
-                minBitrate: (options.bitrate * 0.8) || 2000000,
-                rid: 'f',
-                scalabilityMode: 'L1T1',
-                maxFramerate: options.fps || 30,
-                adaptation: { algorithm: 'none' }
-            }]
-        });
-    });
-    self.stream.getAudioTracks().forEach(track => {
-        self.pc.addTransceiver(track, {
-            direction: 'sendonly',
-            streams: [self.stream],
-            sendEncodings: [{
-                maxBitrate: 256000
-            }]
-        });
-    }); */
-
-      var offer = await self.pc.createOffer({
-        offerToReceiveAudio: false,
-        offerToReceiveVideo: false,
-        // 添加分辨率约束
-        // iceRestart: false,
-        // voiceActivityDetection: false,
-        codecPreferences: ['H264', 'VP8'],
-        width: options.width || 1280,
-        height: options.height || 720,
-        frameRate: options.fps || 30
-      });
-      await self.pc.setLocalDescription(offer);
-      const answer = await new Promise(function (resolve, reject) {
-          // console.log(`Generated offer: ${offer.sdp}`);
-
-          const xhr = new XMLHttpRequest();
-          xhr.onload = function() {
-              if (xhr.readyState !== xhr.DONE) return;
-              if (xhr.status !== 200 && xhr.status !== 201) return reject(xhr);
-              const data = xhr.responseText;
-              // console.log("Got answer: ", data);
-              return data.code ? reject(xhr) : resolve(data);
-          }
-          xhr.open('POST', url, true);
-          xhr.setRequestHeader('Content-type', 'application/sdp');
-          xhr.send(offer.sdp);
-      });
-      await self.pc.setRemoteDescription(
-          new RTCSessionDescription({type: 'answer', sdp: answer})
-      );
-
-      return self.__internal.parseId(url, offer.sdp, answer);
-  };
-
-  // See https://datatracker.ietf.org/doc/draft-ietf-wish-whip/
-  // @url The WebRTC url to play with, for example:
-  //      http://localhost:1985/rtc/v1/whep/?app=live&stream=livestream
-  // @options The options to control playing, supports:
-  //      videoOnly: boolean, whether only play video, default to false.
-  //      audioOnly: boolean, whether only play audio, default to false.
-  self.play = async function(url, options) {
-      if (url.indexOf('/whip-play/') === -1 && url.indexOf('/whep/') === -1) throw new Error(`invalid WHEP url ${url}`);
-      if (options?.videoOnly && options?.audioOnly) throw new Error(`The videoOnly and audioOnly in options can't be true at the same time`);
-
-      if (!options?.videoOnly) self.pc.addTransceiver("audio", {direction: "recvonly"});
-      if (!options?.audioOnly) self.pc.addTransceiver("video", {direction: "recvonly"});
-
-      var offer = await self.pc.createOffer();
-      await self.pc.setLocalDescription(offer);
-      const answer = await new Promise(function(resolve, reject) {
-          // console.log(`Generated offer: ${offer.sdp}`);
-
-          const xhr = new XMLHttpRequest();
-          xhr.onload = function() {
-              if (xhr.readyState !== xhr.DONE) return;
-              if (xhr.status !== 200 && xhr.status !== 201) return reject(xhr);
-              const data = xhr.responseText;
-              // console.log("Got answer: ", data);
-              return data.code ? reject(xhr) : resolve(data);
-          }
-          xhr.open('POST', url, true);
-          xhr.setRequestHeader('Content-type', 'application/sdp');
-          xhr.send(offer.sdp);
-      });
-      await self.pc.setRemoteDescription(
-          new RTCSessionDescription({type: 'answer', sdp: answer})
-      );
-
-      return self.__internal.parseId(url, offer.sdp, answer);
-  };
-
-  // Close the publisher.
-  self.close = function () {
-      self.pc && self.pc.close();
-      self.pc = null;
-  };
-
-  // The callback when got local stream.
-  // @see https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addStream#Migrating_to_addTrack
-  self.ontrack = function (event) {
-      // Add track to stream of SDK.
-      self.stream.addTrack(event.track);
-  };
-
-  self.pc = new RTCPeerConnection({
-    bundlePolicy: 'max-bundle',  // 合并多个轨道到单个传输通道（减少端口占用）
-    rtcpMuxPolicy: 'require',    // RTCP与RTP复用同一端口（NAT穿透必需）
-    encodedInsertableStreams: false,
-    // peerIdentity: 'fixed-bitrate',
-    // forceNegotiatedDtlsSrtp: true,
-    // sdpSemantics: 'unified-plan',
-    iceTransportPolicy: 'all',
-    iceServers: []
-  });
-
-  // To keep api consistent between player and publisher.
-  // @see https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addStream#Migrating_to_addTrack
-  // @see https://webrtc.org/getting-started/media-devices
-  self.stream = null;
-
-  // Internal APIs.
-  self.__internal = {
-      parseId: (url, offer, answer) => {
-          let sessionid = offer.substr(offer.indexOf('a=ice-ufrag:') + 'a=ice-ufrag:'.length);
-          sessionid = sessionid.substr(0, sessionid.indexOf('\n') - 1) + ':';
-          sessionid += answer.substr(answer.indexOf('a=ice-ufrag:') + 'a=ice-ufrag:'.length);
-          sessionid = sessionid.substr(0, sessionid.indexOf('\n'));
-
-          //const a = document.createElement("a");
-          //a.href = url;
-          return {
-              sessionid: sessionid, // Should be ice-ufrag of answer:offer.
-              //simulator: a.protocol + '//' + a.host + '/rtc/v1/nack/',
-          };
-      },
-  };
-
-  // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/ontrack
-  self.pc.ontrack = function(event) {
-      if (self.ontrack) {
-          self.ontrack(event);
-      }
-  };
-
-  return self;
-}
-
-module.exports = { SrsRtcWhipWhepAsync }
-},{}]},{},[50])(50)
+},{"cuid":9,"events":16,"inherits":21}]},{},[50])(50)
 });
